@@ -1,5 +1,14 @@
-import {makeExecutableSchema} from 'graphql-tools';
-import {resolvers} from './database';
+import {makeExecutableSchema, mergeSchemas} from 'graphql-tools';
+import { find, filter } from 'lodash';
+import * as query from './resolver/query';
+
+const resolvers = {
+  Query: {
+    allLinks: query.allLinks,
+    getLink: query.getLink,
+  },
+}
+
 
 const typeDefs = `
 type Link {
@@ -8,8 +17,11 @@ type Link {
   description: String!
 }
 type Query {
-    allLinks: [Link!]!,
-    getLink(id: Int!): Link
+  allLinks: [Link!]!,
+  getLink(id: Int!): Link
+}
+type Mutation {
+  
 }
 `;
 
